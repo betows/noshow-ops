@@ -175,8 +175,8 @@ function WeekBoard() {
                 key={`${day}-${slotIndex}`}
                 className={
                   filled
-                    ? "h-12 rounded-md bg-forest/12 ring-1 ring-forest/15"
-                    : "h-12 rounded-md border border-dashed border-signal/40 bg-signal/8"
+                    ? "h-12 rounded-md bg-forest/20 ring-1 ring-forest/25"
+                    : "h-12 rounded-md border border-dashed border-signal/55 bg-transparent"
                 }
                 aria-hidden="true"
               />

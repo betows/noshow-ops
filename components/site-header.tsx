@@ -14,15 +14,15 @@ export function SiteHeader({ calendlyUrl }: SiteHeaderProps) {
           {site.name}
         </Link>
         <nav className="hidden items-center gap-6 text-sm text-muted md:flex" aria-label="Page">
-          <a className="hover:text-ink" href="#offer">
+          <Link className="hover:text-ink" href="/#offer">
             Offer
-          </a>
-          <a className="hover:text-ink" href="#who">
+          </Link>
+          <Link className="hover:text-ink" href="/#who">
             Who
-          </a>
-          <a className="hover:text-ink" href="#proof">
+          </Link>
+          <Link className="hover:text-ink" href="/#proof">
             Proof
-          </a>
+          </Link>
         </nav>
         <div className="shrink-0">
           {calendlyUrl ? (
