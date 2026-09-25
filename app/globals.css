@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f3efe6;
+  --ink: #161412;
+  --muted: #5c564e;
+  --rule: #d6d0c4;
+  --forest: #1c3d32;
+  --forest-hover: #142c24;
+  --signal: #b4532a;
+  --card: #fffcf6;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-forest: var(--forest);
+  --color-forest-hover: var(--forest-hover);
+  --color-signal: var(--signal);
+  --color-card: var(--card);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-newsreader), ui-serif, Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--forest) 18%, transparent);
+  color: var(--ink);
+}
