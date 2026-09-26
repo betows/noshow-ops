@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { BookCallLink } from "@/components/book-call-link";
 import { copy } from "@/lib/copy";
 
 type CtaButtonsProps = {
@@ -62,21 +63,7 @@ export function CtaButtons({
             : "flex-col gap-3 sm:flex-row sm:items-center",
         )}
       >
-        {calendlyUrl ? (
-          <a className={primaryClass} href={calendlyUrl}>
-            {copy.ctaPrimary}
-          </a>
-        ) : (
-          <button
-            className={primaryClass}
-            type="button"
-            onClick={() =>
-              setError("Set NEXT_PUBLIC_CALENDLY_URL to enable the call booking link.")
-            }
-          >
-            {copy.ctaPrimary}
-          </button>
-        )}
+        <BookCallLink calendlyUrl={calendlyUrl} className={primaryClass} />
         <button
           className={secondaryClass}
           type="button"

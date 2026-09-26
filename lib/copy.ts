@@ -1,11 +1,25 @@
 export const site = {
   name: "No-Show Ops",
   retainer: "$2,500/mo",
+  title: "No-Show Ops | Cut no-shows for dental, salon & home services",
 } as const;
+
+export const BOOKING_FALLBACK_MAILTO =
+  "mailto:appointcorporation@gmail.com?subject=Book%20a%2020-min%20call";
+
+export function resolveBookCallHref(calendlyUrl: string) {
+  const href = calendlyUrl.trim();
+  if (href) {
+    return { href, isCalendly: true as const };
+  }
+  return { href: BOOKING_FALLBACK_MAILTO, isCalendly: false as const };
+}
 
 export const copy = {
   headline: "Empty chairs are costing you more than ads.",
   sub: "We cut no-shows and fill open slots for US service businesses with AI booking follow-up + light CRM.",
+  metaDescription:
+    "We cut no-shows and fill open slots for US dental, salon, and home-service businesses with AI booking follow-up + light CRM.",
   pain: "Last-minute cancels. No-shows. Tools that book — but nobody follows up. Your team chases texts instead of serving clients.",
   offer:
     "We cut no-shows and empty slots for dental, salon, and home-service SMBs with AI booking follow-up + light CRM — from $2,500/mo.",

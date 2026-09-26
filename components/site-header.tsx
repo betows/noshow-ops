@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { CtaButtons } from "@/components/cta-buttons";
-import { copy, site } from "@/lib/copy";
+import { BookCallLink } from "@/components/book-call-link";
+import { site } from "@/lib/copy";
 
 type SiteHeaderProps = {
   calendlyUrl: string;
@@ -25,16 +25,10 @@ export function SiteHeader({ calendlyUrl }: SiteHeaderProps) {
           </Link>
         </nav>
         <div className="shrink-0">
-          {calendlyUrl ? (
-            <a
-              className="inline-flex h-10 items-center justify-center rounded-md bg-forest px-3 text-sm font-medium text-paper transition-colors hover:bg-forest-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest sm:px-4"
-              href={calendlyUrl}
-            >
-              {copy.ctaPrimary}
-            </a>
-          ) : (
-            <CtaButtons calendlyUrl={calendlyUrl} variant="compact" />
-          )}
+          <BookCallLink
+            calendlyUrl={calendlyUrl}
+            className="inline-flex h-10 items-center justify-center rounded-md bg-forest px-3 text-sm font-medium text-paper transition-colors hover:bg-forest-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest sm:px-4"
+          />
         </div>
       </div>
     </header>

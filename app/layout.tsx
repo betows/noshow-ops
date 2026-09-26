@@ -21,22 +21,22 @@ const siteUrl = getSiteUrl();
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${site.name} — ${copy.headline}`,
+    default: site.title,
     template: `%s · ${site.name}`,
   },
-  description: copy.sub,
+  description: copy.metaDescription,
   applicationName: site.name,
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: site.name,
-    title: copy.headline,
-    description: copy.sub,
+    title: site.title,
+    description: copy.metaDescription,
   },
   twitter: {
     card: "summary_large_image",
-    title: copy.headline,
-    description: copy.sub,
+    title: site.title,
+    description: copy.metaDescription,
   },
   robots: {
     index: true,
