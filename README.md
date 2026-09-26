@@ -1,15 +1,15 @@
 # No-Show Ops
 
-English one-page marketing site for a done-for-you no-show recovery service. US dental, salon, and home-service operators. AI booking follow-up + light CRM, from **$2,500/mo**.
+English one-page site for a planned no-show recovery offer. **Not for sale.** There is no deliverable product and no live checkout.
 
-Stack: Next.js App Router, TypeScript, Tailwind CSS, Stripe Checkout (subscription).
+Stack: Next.js App Router, TypeScript, Tailwind CSS.
 
 ## Local setup
 
 ```bash
 npm install
 cp .env.example .env.local
-# fill the values in .env.local
+# fill NEXT_PUBLIC_SITE_URL if you need a non-localhost origin
 npm run dev
 ```
 
@@ -20,93 +20,38 @@ npm run build
 npm start
 ```
 
+## Sales are halted
+
+This site must not charge or sell. `POST /api/checkout` is disabled and returns **503** with a not-for-sale message. It does **not** create Stripe Checkout sessions.
+
+The UI has no **Start retainer** button and no other Checkout CTA. There is no waitlist, Calendly, or book-a-call path.
+
+Stripe env vars and `scripts/create-stripe-price.mjs` are leftover from a previous sales path. They are unused while the offer is not for sale. Do not treat them as a live charge setup.
+
 ## Environment variables
 
 | Name | Where | Purpose |
 | --- | --- | --- |
-| `STRIPE_SECRET_KEY` | Server | Creates Checkout Sessions |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Browser contract | Hosted Checkout does not need it at runtime; set it so the env contract is complete |
-| `STRIPE_PRICE_ID` | Server | Recurring Price id for **$2,500 USD / month** |
-| `NEXT_PUBLIC_SITE_URL` | Server + browser | Canonical origin for Checkout `success_url` / `cancel_url` (no trailing slash) |
+| `NEXT_PUBLIC_SITE_URL` | Server + browser | Canonical origin for metadata and sitemap (no trailing slash) |
 
 Copy `.env.example` to `.env.local` for local work. Never commit secret keys.
 
 If `NEXT_PUBLIC_SITE_URL` is unset on Vercel, the app falls back to `https://$VERCEL_URL`.
 
-## Stripe: Product + $2,500/mo Price
-
-Checkout charges a **subscription** against `STRIPE_PRICE_ID`. Create that Price in test mode first, then repeat in live mode.
-
-### Option A — script (API)
-
-1. Put a test `STRIPE_SECRET_KEY` in `.env.local`.
-2. Run:
-
-```bash
-npm run stripe:create-price
-```
-
-3. Copy the printed `price_...` id into `STRIPE_PRICE_ID` (local + Vercel).
-
-The script creates:
-
-- Product: `No-Show Ops retainer`
-- Price: `250000` cents USD, `recurring.interval = month`
-
-### Option B — Dashboard
-
-1. [Stripe Dashboard → Product catalog](https://dashboard.stripe.com/test/products) → Add product.
-2. Name: `No-Show Ops retainer`.
-3. Recurring price: **$2,500.00 USD / month**.
-4. Copy the Price id (`price_...`) into `STRIPE_PRICE_ID`.
-
-### Option C — curl
-
-```bash
-curl https://api.stripe.com/v1/products \
-  -u "$STRIPE_SECRET_KEY:" \
-  -d name="No-Show Ops retainer" \
-  -d description="AI booking follow-up + light CRM. Monthly retainer."
-
-curl https://api.stripe.com/v1/prices \
-  -u "$STRIPE_SECRET_KEY:" \
-  -d product="prod_replace_me" \
-  -d unit_amount=250000 \
-  -d currency=usd \
-  -d "recurring[interval]=month"
-```
-
-## Checkout flow
-
-1. **Start retainer** `POST`s `/api/checkout`.
-2. The route creates a Stripe Checkout Session (`mode: subscription`) for `STRIPE_PRICE_ID`.
-3. The browser redirects to Stripe-hosted Checkout.
-4. Success → `/success?session_id={CHECKOUT_SESSION_ID}`.
-5. Cancel → `/cancel`.
-
-Test cards: [https://docs.stripe.com/testing](https://docs.stripe.com/testing) — `4242 4242 4242 4242` in test mode.
-
-If you will charge US (or EU) customers, enable [Stripe Tax for recurring payments](https://docs.stripe.com/billing/taxes/collect-taxes) and complete a tax registration in the Dashboard. This site does **not** turn on `automatic_tax` until that registration exists.
-
 ## Deploy on Vercel
 
 1. Import this repo in [Vercel](https://vercel.com/new).
 2. Framework preset: Next.js (default).
-3. Add the env vars above for Production, Preview, and Development.
-4. Set `NEXT_PUBLIC_SITE_URL` to the production origin, e.g. `https://www.example.com`.
-5. Deploy.
-6. Use **live** Stripe keys + the live `STRIPE_PRICE_ID` only on Production.
+3. Set `NEXT_PUBLIC_SITE_URL` to the production origin, e.g. `https://www.example.com`.
+4. Deploy.
 
-Preview deployments can keep test keys. After a custom domain is attached, update `NEXT_PUBLIC_SITE_URL` to that domain so Checkout redirects stay on-site.
+Stripe keys are not required. After a custom domain is attached, update `NEXT_PUBLIC_SITE_URL` to that domain.
 
 ## Project map
 
 ```
-app/page.tsx                 Landing
-app/success/page.tsx         Checkout success
-app/cancel/page.tsx          Checkout cancel
-app/api/checkout/route.ts    Stripe Checkout Session
-scripts/create-stripe-price.mjs
+app/page.tsx                 Landing (non-selling / coming soon)
+app/success/page.tsx         Legacy URL — not for sale
+app/cancel/page.tsx          Legacy URL — not for sale
+app/api/checkout/route.ts    Disabled (503, does not charge)
 ```
-
-The only sales CTA is **Start retainer**, which `POST`s `/api/checkout` and redirects to Stripe-hosted Checkout. Calendly and personal mailto links are not used on the marketing site.

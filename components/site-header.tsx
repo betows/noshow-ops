@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CtaButtons } from "@/components/cta-buttons";
+import { NotForSaleNotice } from "@/components/not-for-sale-notice";
 import { site } from "@/lib/copy";
 
 export function SiteHeader() {
@@ -21,7 +21,7 @@ export function SiteHeader() {
           </Link>
         </nav>
         <div className="shrink-0">
-          <CtaButtons variant="compact" />
+          <NotForSaleNotice variant="compact" />
         </div>
       </div>
     </header>
