@@ -10,8 +10,6 @@ const painBeats = [
 ] as const;
 
 export default function Home() {
-  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL?.trim() ?? "";
-
   return (
     <div className="flex min-h-full flex-col">
       <a
@@ -20,7 +18,7 @@ export default function Home() {
       >
         Skip to content
       </a>
-      <SiteHeader calendlyUrl={calendlyUrl} />
+      <SiteHeader />
       <main id="main" className="flex-1">
         <section className="mx-auto grid w-full max-w-6xl gap-12 px-5 pb-20 pt-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end lg:pb-24 lg:pt-20">
           <div>
@@ -32,7 +30,7 @@ export default function Home() {
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted">{copy.sub}</p>
             <div className="mt-8">
-              <CtaButtons calendlyUrl={calendlyUrl} />
+              <CtaButtons />
             </div>
             <p className="mt-4 text-sm text-muted">
               From {site.retainer} · Dental · Salon · Home services
@@ -132,11 +130,11 @@ export default function Home() {
           <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 py-20 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-xl">
               <h2 id="start-heading" className="font-display text-3xl tracking-tight sm:text-4xl">
-                Start with a call — or the retainer.
+                Start the retainer.
               </h2>
               <p className="mt-4 text-lg leading-8 text-muted">{copy.offer}</p>
             </div>
-            <CtaButtons calendlyUrl={calendlyUrl} />
+            <CtaButtons />
           </div>
         </section>
       </main>

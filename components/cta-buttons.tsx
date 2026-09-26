@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { BookCallLink } from "@/components/book-call-link";
 import { copy } from "@/lib/copy";
 
 type CtaButtonsProps = {
-  calendlyUrl: string;
   variant?: "hero" | "compact" | "footer";
 };
 
@@ -13,22 +11,14 @@ function classNames(...parts: Array<string | false | undefined>) {
   return parts.filter(Boolean).join(" ");
 }
 
-export function CtaButtons({
-  calendlyUrl,
-  variant = "hero",
-}: CtaButtonsProps) {
+export function CtaButtons({ variant = "hero" }: CtaButtonsProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
 
-  const stacked = variant !== "compact";
-  const primaryClass =
+  const buttonClass =
     variant === "compact"
-      ? "inline-flex h-10 items-center justify-center rounded-md bg-forest px-4 text-sm font-medium text-paper transition-colors hover:bg-forest-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
-      : "inline-flex h-12 items-center justify-center rounded-md bg-forest px-5 text-base font-medium text-paper transition-colors hover:bg-forest-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest";
-  const secondaryClass =
-    variant === "compact"
-      ? "inline-flex h-10 items-center justify-center rounded-md border border-ink/15 bg-card px-4 text-sm font-medium text-ink transition-colors hover:border-ink/30 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest disabled:cursor-wait disabled:opacity-70"
-      : "inline-flex h-12 items-center justify-center rounded-md border border-ink/15 bg-card px-5 text-base font-medium text-ink transition-colors hover:border-ink/30 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest disabled:cursor-wait disabled:opacity-70";
+      ? "inline-flex h-10 items-center justify-center rounded-md bg-forest px-3 text-sm font-medium text-paper transition-colors hover:bg-forest-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest disabled:cursor-wait disabled:opacity-70 sm:px-4"
+      : "inline-flex h-12 items-center justify-center rounded-md bg-forest px-5 text-base font-medium text-paper transition-colors hover:bg-forest-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest disabled:cursor-wait disabled:opacity-70";
 
   async function startCheckout() {
     setStatus("loading");
@@ -46,33 +36,21 @@ export function CtaButtons({
     } catch (cause) {
       setStatus("error");
       setError(
-        cause instanceof Error
-          ? cause.message
-          : "Unable to start Checkout. Try again or book a call.",
+        cause instanceof Error ? cause.message : "Unable to start Checkout. Try again.",
       );
     }
   }
 
   return (
-    <div className={classNames("flex flex-col", stacked && "gap-3")}>
-      <div
-        className={classNames(
-          "flex",
-          variant === "compact"
-            ? "items-center gap-2"
-            : "flex-col gap-3 sm:flex-row sm:items-center",
-        )}
+    <div className={classNames("flex flex-col", variant !== "compact" && "gap-3")}>
+      <button
+        className={buttonClass}
+        type="button"
+        onClick={startCheckout}
+        disabled={status === "loading"}
       >
-        <BookCallLink calendlyUrl={calendlyUrl} className={primaryClass} />
-        <button
-          className={secondaryClass}
-          type="button"
-          onClick={startCheckout}
-          disabled={status === "loading"}
-        >
-          {status === "loading" ? "Redirecting to Stripe…" : copy.ctaSecondary}
-        </button>
-      </div>
+        {status === "loading" ? "Redirecting to Stripe…" : copy.ctaPrimary}
+      </button>
       {error ? (
         <p className="max-w-md text-sm text-signal" role="alert">
           {error}
