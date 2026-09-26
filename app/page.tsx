@@ -104,7 +104,7 @@ export default function Home() {
                 Proof
               </p>
               <h2 className="mt-3 font-display text-3xl tracking-tight">
-                Outline only — placeholders
+                What you’ll see after a pilot
               </h2>
             </div>
             <p className="max-w-md text-sm leading-6 text-muted">

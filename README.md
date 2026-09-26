@@ -27,7 +27,7 @@ npm start
 | `STRIPE_SECRET_KEY` | Server | Creates Checkout Sessions |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Browser contract | Hosted Checkout does not need it at runtime; set it so the env contract is complete |
 | `STRIPE_PRICE_ID` | Server | Recurring Price id for **$2,500 USD / month** |
-| `NEXT_PUBLIC_CALENDLY_URL` | Browser | Primary CTA — Book a 20-min call |
+| `NEXT_PUBLIC_CALENDLY_URL` | Browser | Primary CTA — Book a 20-min call. If unset, the button emails `appointcorporation@gmail.com` instead of a dead link. |
 | `NEXT_PUBLIC_SITE_URL` | Server + browser | Canonical origin for Checkout `success_url` / `cancel_url` (no trailing slash) |
 
 Copy `.env.example` to `.env.local` for local work. Never commit secret keys.
@@ -110,4 +110,4 @@ app/api/checkout/route.ts    Stripe Checkout Session
 scripts/create-stripe-price.mjs
 ```
 
-Primary CTA uses `NEXT_PUBLIC_CALENDLY_URL` as a placeholder until the real Calendly event is set.
+Primary CTA uses `NEXT_PUBLIC_CALENDLY_URL` when set. If that env is missing or empty, the button falls back to `mailto:appointcorporation@gmail.com` so it never renders a dead href.
