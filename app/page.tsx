@@ -1,4 +1,4 @@
-import { CtaButtons } from "@/components/cta-buttons";
+import { NotForSaleNotice } from "@/components/not-for-sale-notice";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { copy, site } from "@/lib/copy";
@@ -23,17 +23,17 @@ export default function Home() {
         <section className="mx-auto grid w-full max-w-6xl gap-12 px-5 pb-20 pt-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end lg:pb-24 lg:pt-20">
           <div>
             <p className="mb-5 text-xs font-medium uppercase tracking-[0.18em] text-muted">
-              {site.name} · DFY no-show recovery
+              {site.name} · {copy.availabilityLabel}
             </p>
             <h1 className="font-display text-[2.6rem] leading-[1.05] tracking-tight text-ink sm:text-6xl">
               {copy.headline}
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted">{copy.sub}</p>
             <div className="mt-8">
-              <CtaButtons />
+              <NotForSaleNotice />
             </div>
             <p className="mt-4 text-sm text-muted">
-              From {site.retainer} · Dental · Salon · Home services
+              Dental · Salon · Home services — not a live offer
             </p>
           </div>
           <WeekBoard />
@@ -126,15 +126,15 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-ink/8 bg-card/70" aria-labelledby="start-heading">
+        <section className="border-t border-ink/8 bg-card/70" aria-labelledby="availability-heading">
           <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 py-20 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-xl">
-              <h2 id="start-heading" className="font-display text-3xl tracking-tight sm:text-4xl">
-                Start the retainer.
+              <h2 id="availability-heading" className="font-display text-3xl tracking-tight sm:text-4xl">
+                Not for sale.
               </h2>
-              <p className="mt-4 text-lg leading-8 text-muted">{copy.offer}</p>
+              <p className="mt-4 text-lg leading-8 text-muted">{copy.availabilityBody}</p>
             </div>
-            <CtaButtons />
+            <NotForSaleNotice />
           </div>
         </section>
       </main>

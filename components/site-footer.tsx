@@ -1,4 +1,4 @@
-import { site } from "@/lib/copy";
+import { copy, site } from "@/lib/copy";
 
 export function SiteFooter() {
   return (
@@ -8,7 +8,7 @@ export function SiteFooter() {
           © {new Date().getFullYear()} {site.name}. English-only. US service
           businesses.
         </p>
-        <p>Checkout is processed by Stripe. We use your details to start the retainer.</p>
+        <p>{copy.availabilityLabel}. No checkout on this site.</p>
       </div>
     </footer>
   );
