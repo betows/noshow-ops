@@ -28,13 +28,12 @@ export default async function SuccessPage({
 }: {
   searchParams: SuccessSearchParams;
 }) {
-  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL?.trim() ?? "";
   const { session_id: sessionId } = await searchParams;
   const email = await readCheckoutEmail(sessionId);
 
   return (
     <div className="flex min-h-full flex-col">
-      <SiteHeader calendlyUrl={calendlyUrl} />
+      <SiteHeader />
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-5 py-20">
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted">
           Stripe Checkout
@@ -51,21 +50,13 @@ export default async function SuccessPage({
           No further payment is taken on this site. Manage the subscription in the
           Stripe receipt email if you need to update the card.
         </p>
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-10">
           <Link
             className="inline-flex h-12 items-center justify-center rounded-md bg-forest px-5 text-base font-medium text-paper transition-colors hover:bg-forest-hover"
             href="/"
           >
             Back to {site.name}
           </Link>
-          {calendlyUrl ? (
-            <a
-              className="inline-flex h-12 items-center justify-center rounded-md border border-ink/15 bg-card px-5 text-base font-medium text-ink hover:border-ink/30"
-              href={calendlyUrl}
-            >
-              Book a 20-min call
-            </a>
-          ) : null}
         </div>
       </main>
       <SiteFooter />

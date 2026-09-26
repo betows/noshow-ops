@@ -58,7 +58,7 @@ export async function POST() {
 
     console.error("Stripe Checkout session failed", error);
     return NextResponse.json(
-      { error: "Unable to start Checkout. Try again or book a call." },
+      { error: "Unable to start Checkout. Try again." },
       { status: 500 },
     );
   }
